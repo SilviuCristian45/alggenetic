@@ -12,7 +12,7 @@ const Genom = require('./genom.js'); //importam clasa de genom
 
 function generatePopulation() {
     let Population = [];
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 5; i++) {
         let G = new Genom();
         Population.push(G);
         //console.log(Population[i].chromozoms);
@@ -26,39 +26,66 @@ function orderByFitness(data) {
     });
 }
 
-function randomBetween2Values(a, b) {
-    return Math.floor(Math.random() * (a - b + 2));
-}
+function crossover(individ1, individ2) {//mom - dad 
+    let offspring1 = new Genom();
+    let offspring2 = new Genom();
 
-function crossover(individ1, individ2) {
     for (let gene = 0; gene < 4; gene++) {
-        
-        
+        offspring1.chromozoms.push(individ2[gene]);
+        offspring2.chromozoms.push(individ1[gene]);
     }
+
+    return {
+        child1 : offspring1,
+        child2 : offspring2
+    };
 }
 
 function convergePopulation() {
    	
 }
 
-function main() {
-    let population = generatePopulation();
-    //population = orderByFitness(population);
-    for (let gen = 0; gen < 10; gen++) {//primele 10 generatii
-        //luam fiecare individ (dintre primii 32). i imperechem 
-        for (let i = 0; i < 31; i++) {
-            for (let j = i+1; j < 32; j++) {
-                crossover(population[i], population[j]);
-            }
-        }
-        //i sortam dupa fitness
-        population = orderByFitness(population);
+function mutation(individ1) {
+    let prob = Math.random();
+    let mutationProbability = 0.9;
+
+    console.log("probability : " + prob);
+
+    if(prob < mutationProbability){
+        //make mutation
+        result = [];
+        individ1.chromozoms.forEach(element => {
+            result.push( (element === 1 ? 0 : 1) );
+        });
+        individ1.chromozoms = result;
     }
-    //afisam sa vedem la ce fitness a ajuns generatia 
 }
 
-//main();
-console.log(randomBetween2Values(1,1));
+function main() {
+    let population = generatePopulation();
+    console.log(population[0]);
+    console.log(population[1]);
+    console.log(crossover(population[0],population[1]))
+    //console.log(population[0]);
+    //population = orderByFitness(population);
+    // for (let gen = 0; gen < 10; gen++) {//primele 10 generatii
+    //     //luam fiecare individ (dintre primii 32). i imperechem 
+    //     for (let i = 0; i < 31; i++) {
+    //         for (let j = i+1; j < 32; j++) {
+    //             let childs = crossover(population[i], population[j]);
+    //             population[i] = childs.child1;
+    //             population[j] = childs.child2;
+    //             mutation(population[i]);
+    //             mutation(population[j]);
+    //         }
+    //     }
+    //     //i sortam dupa fitness
+    //     population = orderByFitness(population);
+    // }
+    // //afisam sa vedem la ce fitness a ajuns generatia 
+}
+
+main();
 
 // console.log(G.chromozoms);
 // console.log(G.fitness());
