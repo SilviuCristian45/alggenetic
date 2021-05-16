@@ -27,12 +27,18 @@ function orderByFitness(data) {
 }
 
 function crossover(individ1, individ2) {//mom - dad 
-    let offspring1 = new Genom();
-    let offspring2 = new Genom();
+    let offspring1 = new Genom(); offspring1.chromozoms = [];
+    let offspring2 = new Genom(); offspring2.chromozoms = [];
 
     for (let gene = 0; gene < 4; gene++) {
-        offspring1.chromozoms.push(individ2[gene]);
-        offspring2.chromozoms.push(individ1[gene]);
+        offspring1.chromozoms.push(individ2.chromozoms[gene]);
+        offspring2.chromozoms.push(individ1.chromozoms[gene]);
+    }
+
+    
+    for (let gene = 4; gene < 8; gene++) {
+        offspring1.chromozoms.push(individ1.chromozoms[gene]);
+        offspring2.chromozoms.push(individ2.chromozoms[gene]);
     }
 
     return {

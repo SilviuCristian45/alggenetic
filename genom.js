@@ -6,7 +6,6 @@ class genom{
         for (let i = 0; i < 8; i++) {
             this.chromozoms.push(Math.floor(Math.random() * 2)); 
         }
-        
     }
 
     fitness(){
